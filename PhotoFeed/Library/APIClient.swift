@@ -7,8 +7,8 @@ typealias JSONArray = [JSONDictionary]
 class APIClient {
   static let shared = APIClient()
 
-  private let clientId = "756f0b424b7f48e38c18c1200ad66752"
-  private let redirectUri = "http://fantageek.com"
+  private let clientId = "9552a4bf126c4c18af03b3d104e8a50b"
+  private let redirectUri = "https://github.com/argyrus/PhotoFeed"
 
   var parameters: JSONDictionary {
     guard let accessToken = accessToken else {
@@ -41,9 +41,12 @@ class APIClient {
   }
 
   func loadMedia(userId: String = "self", completion: @escaping ([Media]) -> Void) {
+    
     request("https://api.instagram.com/v1/users/\(userId)/media/recent",
             parameters: parameters)
     .responseData(completionHandler: { (response) in
+        print(response)
+
       if let data = response.result.value {
         do {
           let holder = try JSONDecoder().decode(ListHolder<Media>.self, from: data)
@@ -61,7 +64,8 @@ class APIClient {
     request("https://api.instagram.com/v1/media/\(mediaId)/likes",
             parameters: parameters)
     .responseData(completionHandler: { (response) in
-      if let data = response.result.value {
+        print(response)
+ if let data = response.result.value {
         do {
           let holder = try JSONDecoder().decode(ListHolder<User>.self, from: data)
           DispatchQueue.main.async {
@@ -78,6 +82,7 @@ class APIClient {
     request("https://api.instagram.com/v1/media/\(mediaId)/comments",
       parameters: parameters)
     .responseData(completionHandler: { (response) in
+        print(response)
       if let data = response.result.value {
         do {
           let holder = try JSONDecoder().decode(ListHolder<Comment>.self, from: data)
@@ -98,6 +103,8 @@ class APIClient {
       if let data = response.result.value {
         do {
           let holder = try JSONDecoder().decode(OneHolder<User>.self, from: data)
+            print(holder)
+
           DispatchQueue.main.async {
             completion(holder.one)
           }
@@ -115,6 +122,7 @@ class APIClient {
       if let data = response.result.value {
         do {
           let holder = try JSONDecoder().decode(ListHolder<User>.self, from: data)
+            print(holder)
           DispatchQueue.main.async {
             completion(holder.list)
           }
@@ -132,6 +140,7 @@ class APIClient {
       if let data = response.result.value {
         do {
           let holder = try JSONDecoder().decode(ListHolder<User>.self, from: data)
+            print(holder)
           DispatchQueue.main.async {
             completion(holder.list)
           }

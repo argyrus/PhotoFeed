@@ -41,6 +41,8 @@ class LoginController: UIViewController, WKNavigationDelegate  {
   // MARK: - WKNavigationDelegate
 
   func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+    
+    print("url is currently \(String(describing: navigationAction.request.url))")
     if let url = navigationAction.request.url,
       url.absoluteString.contains("#access_token") {
       let parts = url.absoluteString.split(separator: "#").last!
