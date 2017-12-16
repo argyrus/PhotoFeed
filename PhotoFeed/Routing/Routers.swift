@@ -2,6 +2,7 @@ import UIKit
 import Compass
 
 struct UserRoute: Routable {
+    //test123
   func navigate(to location: Location, from currentController: CurrentController) throws {
     guard let userId = location.arguments["userId"] else {
       return
